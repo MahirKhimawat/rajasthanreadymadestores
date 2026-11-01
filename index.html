@@ -1023,19 +1023,577 @@ setInterval(updateStatus,60000);
     );
 
   function fixBrandLogoAndNavbar() {
-    // Inject responsive navbar polish so links don't wrap awkwardly or clip the right button
+    // Comprehensive responsive design & mobile anti-clash system across all devices (320px to 1920px+)
     const style = document.createElement('style');
+    style.id = 'rrs-responsive-overhaul';
     style.textContent = `
-      .links a, .nav-act .btn { white-space: nowrap; }
-      .links { gap: clamp(0.75rem, 1.3vw, 1.4rem); }
-      .brand-t { white-space: nowrap; }
-      .logo-img { background: #2E151B; object-fit: cover; }
-      @media (max-width: 1120px) and (min-width: 961px) {
-        .nav-act .btn-gold { padding: 0.55rem 0.85rem; font-size: 0.8rem; }
-        .brand-s { font-size: 0.68rem; }
+      /* Global overflow & box-sizing safety */
+      html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding-left: clamp(0.85rem, 3vw, 1.25rem);
+        padding-right: clamp(0.85rem, 3vw, 1.25rem);
+      }
+
+      /* Safe responsive grids that never overflow narrow phones */
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 275px), 1fr));
+      }
+      .social {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      }
+      .aud {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+      }
+      .strip .wrap {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+      }
+
+      /* Brand & Navbar desktop/tablet polish */
+      .logo-img {
+        background: #2E151B;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .brand {
+        min-width: 0;
+        flex: 1 1 auto;
+      }
+      .brand > div {
+        min-width: 0;
+      }
+      .nav-act {
+        flex-shrink: 0;
+      }
+      @media (min-width: 961px) {
+        .links a, .nav-act .btn, .brand-t {
+          white-space: nowrap;
+        }
+        .links {
+          gap: clamp(0.75rem, 1.25vw, 1.4rem);
+        }
+      }
+      @media (max-width: 1140px) and (min-width: 961px) {
+        .nav-act .btn-gold {
+          padding: 0.55rem 0.85rem;
+          font-size: 0.8rem;
+        }
+        .brand-t {
+          font-size: 1.02rem;
+        }
+        .brand-s {
+          font-size: 0.66rem;
+        }
+      }
+
+      /* Card badge & price tag anti-clash */
+      .media .badge {
+        max-width: calc(100% - 24px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        z-index: 2;
+      }
+      .media .ptag {
+        max-width: calc(100% - 20px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        z-index: 2;
+      }
+      .acts {
+        display: flex;
+        gap: 0.5rem;
+        align-items: stretch;
+      }
+      .acts .btn {
+        flex: 1 1 0;
+        min-width: 0;
+        text-align: center;
+        line-height: 1.25;
+        padding: 0.6rem 0.55rem;
+        font-size: 0.8rem;
+      }
+
+      /* Lightbox centering & mobile safety */
+      .lb .pv, .lb .nx {
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 310;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      }
+      .lb .x {
+        z-index: 310;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      }
+      .lb-cap {
+        padding: 0.4rem 1rem;
+        background: rgba(10, 6, 28, 0.78);
+        backdrop-filter: blur(4px);
+      }
+
+      /* Tablet & Mobile Navigation (<= 960px) */
+      @media (max-width: 960px) {
+        html {
+          scroll-padding-top: 76px;
+        }
+        .nav .wrap {
+          gap: 0.5rem;
+          padding-top: 0.65rem;
+          padding-bottom: 0.65rem;
+        }
+        .brand {
+          gap: 0.6rem;
+        }
+        .brand-t {
+          font-size: clamp(0.9rem, 3.5vw, 1.08rem);
+          line-height: 1.18;
+          white-space: normal;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .burger {
+          display: inline-grid;
+          place-items: center;
+          width: 40px;
+          height: 40px;
+          flex-shrink: 0;
+        }
+        .links {
+          box-shadow: 0 18px 36px rgba(46, 21, 27, 0.16);
+          padding: 0.75rem 1.1rem 1.1rem;
+          gap: 0;
+        }
+        .links li {
+          width: 100%;
+        }
+        .links a {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.75rem 0.25rem;
+          border-bottom: 1px solid var(--line);
+          font-size: 0.95rem;
+        }
+        .links li:last-child a {
+          border-bottom: none;
+        }
+        .mobile-menu-cta {
+          margin-top: 0.65rem;
+          width: 100%;
+        }
+      }
+
+      /* Mobile Phones & Phablets (<= 768px) */
+      @media (max-width: 768px) {
+        /* Clean, unclogged Topbar on Mobile */
+        .topbar {
+          padding: 0.45rem 0;
+          font-size: 0.75rem;
+        }
+        .topbar [data-i18n="top_address"] {
+          display: none;
+        }
+        .topbar .wrap {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: center;
+          gap: 0.45rem;
+        }
+        .pill {
+          font-size: 0.72rem;
+          padding: 0.2rem 0.6rem;
+        }
+        .top-links {
+          width: 100%;
+          justify-content: space-between;
+          gap: 0.4rem 0.6rem;
+          padding-top: 0.35rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.12);
+          font-size: 0.74rem;
+        }
+        .top-links a {
+          white-space: nowrap;
+        }
+        .lang {
+          padding: 0.18rem 0.45rem;
+          font-size: 0.74rem;
+          margin-left: auto;
+        }
+
+        /* Hero Section Mobile Polish */
+        .hero {
+          padding: 2.2rem 0 2.8rem;
+        }
+        .hero .wrap {
+          gap: 1.85rem;
+        }
+        .heritage {
+          display: inline-block;
+          border-radius: 12px;
+          font-size: 0.72rem;
+          padding: 0.32rem 0.75rem;
+          line-height: 1.35;
+          margin-bottom: 0.85rem;
+          max-width: 100%;
+        }
+        .hero h1 {
+          font-size: clamp(1.8rem, 6.8vw, 2.45rem);
+          line-height: 1.12;
+          margin-bottom: 0.85rem;
+        }
+        .lead {
+          font-size: 0.94rem;
+          line-height: 1.55;
+          margin-bottom: 1.35rem;
+        }
+        .cta {
+          display: flex;
+          flex-direction: column;
+          gap: 0.6rem;
+          margin-bottom: 1.6rem;
+        }
+        .cta .btn {
+          width: 100%;
+          justify-content: center;
+          padding: 0.75rem 1rem;
+          font-size: 0.9rem;
+        }
+        .metrics {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.65rem;
+          padding-top: 1.2rem;
+        }
+        .metrics > div {
+          background: rgba(255, 255, 255, 0.07);
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 12px;
+          padding: 0.65rem 0.75rem;
+        }
+        .metrics strong {
+          font-size: 1.2rem;
+        }
+        .metrics span {
+          font-size: 0.73rem;
+        }
+
+        /* Collage Mobile Polish */
+        .collage {
+          grid-template-columns: 1.1fr 0.9fr;
+          grid-template-rows: 135px 135px;
+          gap: 0.6rem;
+        }
+        .collage figure {
+          border-radius: 14px;
+        }
+        .collage figcaption {
+          left: 6px;
+          right: 6px;
+          bottom: 6px;
+          padding: 0.22rem 0.45rem;
+          font-size: 0.67rem;
+          text-align: center;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        /* Trust Strip 2x2 Grid on Mobile */
+        .strip .wrap {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.8rem 0.6rem;
+          padding-top: 1.1rem;
+          padding-bottom: 1.1rem;
+        }
+        .strip div {
+          gap: 0.55rem;
+          font-size: 0.8rem;
+          line-height: 1.25;
+          min-width: 0;
+        }
+        .strip svg {
+          width: 34px;
+          height: 34px;
+          padding: 7px;
+          border-radius: 10px;
+        }
+        .strip small {
+          font-size: 0.7rem;
+          line-height: 1.25;
+        }
+
+        /* Sections & Headings Mobile Spacing */
+        .section {
+          padding: 3rem 0;
+        }
+        .head {
+          margin-bottom: 1.75rem;
+        }
+        .head h2 {
+          font-size: clamp(1.65rem, 6vw, 2.2rem);
+          margin-bottom: 0.55rem;
+        }
+        .head p {
+          font-size: 0.9rem;
+        }
+
+        /* Search Bar & Swipeable Filter Tabs on Mobile */
+        .controls {
+          flex-direction: column-reverse;
+          align-items: stretch;
+          gap: 0.85rem;
+          margin-bottom: 1.4rem;
+        }
+        .search {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+        }
+        .search input {
+          padding: 0.7rem 1rem 0.7rem 2.45rem;
+          font-size: 0.92rem;
+          background: #fff;
+          box-shadow: 0 2px 8px rgba(46,21,27,0.05);
+        }
+        .tabs {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          gap: 0.45rem;
+          padding-bottom: 0.3rem;
+          scrollbar-width: none;
+        }
+        .tabs::-webkit-scrollbar {
+          display: none;
+        }
+        .tab {
+          flex-shrink: 0;
+          white-space: nowrap;
+          padding: 0.48rem 0.9rem;
+          font-size: 0.8rem;
+        }
+
+        /* Banners, Audience, Social & Contact Mobile Polish */
+        .banner, .dispatch, .ccard, .acard, .soc {
+          padding: 1.4rem 1.15rem;
+          border-radius: 16px;
+        }
+        .banner h3, .dispatch h2 {
+          font-size: 1.45rem;
+          line-height: 1.2;
+        }
+        .banner .btnrow {
+          width: 100%;
+          flex-direction: column;
+        }
+        .banner .btnrow .btn, .soc .btn {
+          width: 100% !important;
+          justify-content: center;
+        }
+        .regions {
+          gap: 0.4rem;
+          margin-top: 1rem;
+        }
+        .region {
+          font-size: 0.75rem;
+          padding: 0.3rem 0.7rem;
+          line-height: 1.3;
+        }
+        .ccard .btnrow {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.5rem;
+        }
+        .ccard .btnrow > :last-child:nth-child(odd) {
+          grid-column: 1 / -1;
+        }
+        .ccard .btnrow .btn {
+          width: 100%;
+          padding: 0.6rem 0.5rem;
+          font-size: 0.8rem;
+        }
+        .map, .map iframe {
+          min-height: 270px;
+        }
+
+        /* Drawer & Lightbox on Mobile */
+        .drawer {
+          max-width: 100%;
+          padding: 1.25rem 1rem;
+        }
+        .lb {
+          padding: 0.75rem;
+        }
+        .lb img {
+          max-width: 95vw;
+          max-height: 78vh;
+        }
+        .lb button {
+          width: 38px;
+          height: 38px;
+          font-size: 1.15rem;
+        }
+        .lb .pv { left: 8px; }
+        .lb .nx { right: 8px; }
+        .lb .x { top: 12px; right: 12px; }
+        .lb-cap {
+          bottom: 10px;
+          font-size: 0.76rem;
+        }
+
+        /* Floating WhatsApp Button & Footer Clearance */
+        .float {
+          bottom: 14px;
+          right: 14px;
+          padding: 0.62rem 1rem;
+          font-size: 0.8rem;
+          box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
+        }
+        footer {
+          padding: 2.5rem 0 5rem;
+          margin-top: 2.5rem;
+        }
+        footer .row {
+          gap: 1.5rem;
+        }
+      }
+
+      /* Compact Mobile Phones (<= 480px) */
+      @media (max-width: 480px) {
+        .logo-img {
+          width: 40px;
+          height: 40px;
+        }
+        .brand-hi {
+          font-size: 0.62rem;
+          padding: 0.02rem 0.35rem;
+        }
+        .brand-t {
+          font-size: 0.9rem;
+        }
+        .nav-act {
+          gap: 0.35rem;
+        }
+        .nav-act .btn-o {
+          padding: 0.42rem 0.6rem;
+          font-size: 0.75rem;
+          border-radius: 8px;
+          gap: 0.3rem;
+        }
+        .count {
+          min-width: 19px;
+          height: 19px;
+          font-size: 0.7rem;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+          gap: 1.1rem;
+        }
+        .media {
+          height: 205px;
+        }
+        .body {
+          padding: 1.1rem;
+        }
+        .body h3 {
+          font-size: 1.1rem;
+        }
+        .body p {
+          font-size: 0.86rem;
+        }
+      }
+
+      /* Extra-Small Phones (<= 360px) */
+      @media (max-width: 360px) {
+        .logo-img {
+          width: 35px;
+          height: 35px;
+        }
+        .brand-t {
+          font-size: 0.82rem;
+        }
+        .nav-act .btn-o [data-i18n="nav_inquiry"] {
+          max-width: 54px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .strip .wrap {
+          grid-template-columns: 1fr;
+        }
+        .acts {
+          flex-direction: column;
+        }
       }
     `;
     document.head.appendChild(style);
+
+    // Move Language Selector into the first row of Topbar on mobile for cleaner layout
+    const topWrap = document.querySelector('.topbar .wrap');
+    const langSel = document.getElementById('lang');
+    if (topWrap && langSel && topWrap.firstElementChild) {
+      topWrap.firstElementChild.style.display = 'flex';
+      topWrap.firstElementChild.style.alignItems = 'center';
+      topWrap.firstElementChild.style.justifyContent = 'space-between';
+      topWrap.firstElementChild.style.flex = '1 1 auto';
+      topWrap.firstElementChild.style.gap = '0.5rem';
+    }
+
+    // Add a full-width "Contact for Pricing" CTA inside the mobile dropdown menu
+    const navLinks = document.getElementById('links');
+    if (navLinks && !navLinks.querySelector('.mobile-menu-cta-item')) {
+      const li = document.createElement('li');
+      li.className = 'mobile-menu-cta-item';
+      li.style.listStyle = 'none';
+      const a = document.createElement('a');
+      a.className = 'btn btn-gold mobile-menu-cta';
+      a.href = 'https://wa.me/918422037973?text=Namaste%20Rajasthan%20Readymade%20Stores%2C%20I%20would%20like%20pricing%20and%20availability.';
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.setAttribute('data-i18n', 'nav_price');
+      a.textContent = '💬 Contact for Pricing';
+      a.style.justifyContent = 'center';
+      a.style.borderBottom = 'none';
+      li.appendChild(a);
+      navLinks.appendChild(li);
+    }
+
+    // Add touch-swipe left/right support to Lightbox for mobile phones
+    const lb = document.getElementById('lb');
+    if (lb && !lb.dataset.swipeWired) {
+      lb.dataset.swipeWired = '1';
+      let touchStartX = 0;
+      let touchEndX = 0;
+      lb.addEventListener('touchstart', e => {
+        if (e.changedTouches && e.changedTouches[0]) {
+          touchStartX = e.changedTouches[0].screenX;
+        }
+      }, { passive: true });
+      lb.addEventListener('touchend', e => {
+        if (e.changedTouches && e.changedTouches[0]) {
+          touchEndX = e.changedTouches[0].screenX;
+          const diff = touchEndX - touchStartX;
+          if (Math.abs(diff) > 45 && typeof lbStep === 'function') {
+            lbStep(diff < 0 ? 1 : -1);
+          }
+        }
+      }, { passive: true });
+    }
 
     const logoImg = document.querySelector('.logo-img');
     if (!logoImg) return;
@@ -1050,7 +1608,6 @@ setInterval(updateStatus,60000);
     if (logoImg.complete && logoImg.naturalWidth === 0) {
       applyFallbackLogo();
     }
-    // Also replace immediately if pointing to missing local file image_f9eabe.png
     if ((logoImg.getAttribute('src') || '').includes('image_f9eabe.png')) {
       applyFallbackLogo();
     }
@@ -1818,23 +2375,36 @@ setInterval(updateStatus,60000);
     const gal = document.getElementById('gal');
     if (!gal) return;
 
-    // Enhance gallery layout for 102 photos (responsive grid + filter bar)
     const galStyle = document.createElement('style');
     galStyle.textContent = `
       .gallery {
         columns: unset !important;
         display: grid !important;
-        grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)) !important;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)) !important;
         gap: 1rem !important;
+      }
+      @media (max-width: 900px) {
+        .gallery {
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          gap: 0.75rem !important;
+        }
+      }
+      @media (max-width: 600px) {
+        .gallery {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          gap: 0.6rem !important;
+        }
       }
       .gitem {
         margin-bottom: 0 !important;
         aspect-ratio: 1 / 1;
         display: block;
+        border-radius: 12px;
       }
       .gitem img {
         width: 100% !important;
         height: 100% !important;
+        min-height: 0 !important;
         object-fit: cover !important;
       }
       .gal-toolbar {
@@ -1843,8 +2413,8 @@ setInterval(updateStatus,60000);
         justify-content: space-between;
         align-items: center;
         gap: 0.8rem;
-        margin-bottom: 1.5rem;
-        padding: 0.85rem 1.2rem;
+        margin-bottom: 1.25rem;
+        padding: 0.85rem 1.15rem;
         background: #fff;
         border: 1px solid var(--line);
         border-radius: 14px;
@@ -1853,8 +2423,9 @@ setInterval(updateStatus,60000);
       .gal-count-badge {
         font-weight: 800;
         color: var(--pdeep);
-        font-size: 0.92rem;
-        display: inline-flex;
+        font-size: 0.9rem;
+        display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: 0.5rem;
       }
@@ -1863,19 +2434,40 @@ setInterval(updateStatus,60000);
         color: #1e1b2e;
         padding: 0.15rem 0.65rem;
         border-radius: 999px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+      .gal-more-wrap {
+        text-align: center;
+        margin-top: 1.4rem;
+      }
+      @media (max-width: 768px) {
+        .gal-toolbar {
+          flex-direction: column;
+          align-items: stretch;
+          padding: 0.8rem 0.9rem;
+          gap: 0.65rem;
+        }
+        .gal-count-badge {
+          justify-content: space-between;
+          font-size: 0.82rem;
+        }
       }
     `;
     document.head.appendChild(galStyle);
 
-    // Insert a helpful count & filter toolbar above #gal if not already present
+    let currentFilter = 'all';
+    let showAllPhotos = false;
+    const getInitialLimit = () => (window.innerWidth <= 600 ? 12 : 20);
+
+    // Insert toolbar above #gal
     if (!document.getElementById('galToolbar')) {
       const toolbar = document.createElement('div');
       toolbar.id = 'galToolbar';
       toolbar.className = 'gal-toolbar';
       toolbar.innerHTML = `
         <div class="gal-count-badge">
-          <span>📸 Official Google Business Profile Gallery</span>
+          <span>📸 Official Store &amp; Inventory Gallery</span>
           <strong id="galPhotoCount">${GBP_GALLERY_PHOTOS.length} Photos</strong>
         </div>
         <div class="tabs" role="tablist">
@@ -1888,18 +2480,33 @@ setInterval(updateStatus,60000);
 
       toolbar.querySelectorAll('[data-gal-filter]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const filter = btn.getAttribute('data-gal-filter');
+          currentFilter = btn.getAttribute('data-gal-filter');
+          showAllPhotos = false;
           toolbar.querySelectorAll('[data-gal-filter]').forEach(b => b.classList.toggle('active', b === btn));
-          let visibleCount = 0;
-          gal.querySelectorAll('.gitem').forEach(fig => {
-            const show = filter === 'all' || fig.getAttribute('data-source') === filter;
-            fig.style.display = show ? '' : 'none';
-            if (show) visibleCount++;
-          });
-          const countEl = document.getElementById('galPhotoCount');
-          if (countEl) countEl.textContent = visibleCount + ' Photos';
+          updateGalleryVisibility();
         });
       });
+    }
+
+    // Insert "Show All Photos / Show Less" button below #gal so mobile pages stay compact and fast
+    let moreWrap = document.getElementById('galMoreWrap');
+    if (!moreWrap) {
+      moreWrap = document.createElement('div');
+      moreWrap.id = 'galMoreWrap';
+      moreWrap.className = 'gal-more-wrap';
+      const moreBtn = document.createElement('button');
+      moreBtn.id = 'galMoreBtn';
+      moreBtn.type = 'button';
+      moreBtn.className = 'btn btn-o';
+      moreBtn.addEventListener('click', () => {
+        showAllPhotos = !showAllPhotos;
+        updateGalleryVisibility();
+        if (!showAllPhotos) {
+          gal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+      moreWrap.appendChild(moreBtn);
+      gal.parentNode.insertBefore(moreWrap, gal.nextSibling);
     }
 
     // Populate all 102 photos into #gal
@@ -1924,6 +2531,46 @@ setInterval(updateStatus,60000);
       }
       gal.appendChild(fig);
     });
+
+    function updateGalleryVisibility() {
+      const limit = getInitialLimit();
+      let matchingCount = 0;
+      let shownCount = 0;
+
+      gal.querySelectorAll('.gitem').forEach(fig => {
+        const matches = currentFilter === 'all' || fig.getAttribute('data-source') === currentFilter;
+        if (!matches) {
+          fig.style.display = 'none';
+          return;
+        }
+        matchingCount++;
+        if (showAllPhotos || matchingCount <= limit) {
+          fig.style.display = '';
+          shownCount++;
+        } else {
+          fig.style.display = 'none';
+        }
+      });
+
+      const countEl = document.getElementById('galPhotoCount');
+      if (countEl) {
+        countEl.textContent = matchingCount + ' Photos';
+      }
+
+      const moreBtn = document.getElementById('galMoreBtn');
+      if (moreBtn && moreWrap) {
+        if (matchingCount > limit) {
+          moreWrap.style.display = '';
+          moreBtn.textContent = showAllPhotos
+            ? '▲ Show Fewer Photos'
+            : `📸 View All ${matchingCount} Store Photos (+${matchingCount - shownCount} More)`;
+        } else {
+          moreWrap.style.display = 'none';
+        }
+      }
+    }
+
+    updateGalleryVisibility();
   }
 
   function initRRSUpdates() {
