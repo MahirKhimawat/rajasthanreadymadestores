@@ -14,38 +14,30 @@
   /* ==========================================================================
    * 1. EMBEDDED ROYAL MAROON & GOLD HERITAGE LOGO (Fixes broken "RRS Logo")
    * ========================================================================== */
-  const RRS_LOGO_SVG =
-    'data:image/svg+xml;utf8,' +
-    encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-        <defs>
-          <radialGradient id="bg" cx="35%" cy="30%" r="75%">
-            <stop offset="0%" stop-color="#8A3843"/>
-            <stop offset="55%" stop-color="#722F37"/>
-            <stop offset="100%" stop-color="#2E151B"/>
-          </radialGradient>
-          <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FFF2B2"/>
-            <stop offset="45%" stop-color="#D4AF37"/>
-            <stop offset="100%" stop-color="#9A7B1C"/>
-          </linearGradient>
-        </defs>
-        <circle cx="60" cy="60" r="58" fill="url(#bg)" stroke="url(#gold)" stroke-width="4"/>
-        <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gold)" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.85"/>
-        <path d="M42 31 L48 22 L60 28 L72 22 L78 31 Z" fill="url(#gold)"/>
-        <circle cx="48" cy="20" r="2" fill="#FFF2B2"/>
-        <circle cx="60" cy="18" r="2.4" fill="#FFF2B2"/>
-        <circle cx="72" cy="20" r="2" fill="#FFF2B2"/>
-        <text x="60" y="78" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', serif" font-size="54" font-weight="700" fill="url(#gold)">R</text>
-        <text x="60" y="99" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="800" fill="#EAD2D6" letter-spacing="1.5">EST. 1949</text>
-      </svg>`
-    );
+  const RRS_LOGO_SVG = 'data:image/jpeg;base64,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7umn8JsBnkMbSS2MvPBpPuG71v6rryd4fhhx473rZ1v56XVFGf69GSzxNc2GolYJBp7WPLQ4fIgHv/NdSDotBIa4acASAR9V1RFvJ7R1NVA4SwVU0UjRxD2SOa4D5bB3pcPqKuol8xUVU8svb94+RznjXppxOwvJETf9d3ullcZJ5HyPcdlzyXEn5kn1XUrhFdLdERFAREQEREBERATv/D6+wKJvSC5MNybA+nliv8lL1FuF8pL7ZJ6EY461SwtdVysAEkxc4wtETtua9hLnED07rE9OLniVv6ZdQLVfMwprfcb9SUtNQUslJUSF5hmEhcXMYWtDgdDZ3v6KsT3RGuywbXntLaOkdJj9rudTSZDQZb9+U0kUbh4TGwMa2QP9OQe309e31Uo6wdV8K6gdNccprLQzW3KH3isu9/pmw8aYVckTGGeBw7BshYH8O3Elw9NKlvbXsuNDXH2V1b+lWxltz6a9WLnFmt1zOTE79VwxNvdHPaZ6uGWdjAx01M+I/wAYaHFj+OnE6JCdI8rwfBepN5qabK7lQWassNztVBd56R7Z2TTQhscj44C5zAXb/CSQNKqAdHYR3xevsokqXZvBE6GnqX9W48xma4sbEY67nC38wdUNA19AVDpW843M/M0j/gu2gPn/AFXKJqxurme27J+otvyrErrU07KS1Wimjq2sfFLDUU9NHG9zR+L4XtJBHrrssh156y1fUusteP22711Zj2OUwipqiqibDPcKlw/fVkzWgASPOgAe7WgDudqqNBcjsrGu9XN0m+0DcMfyjDYs0p7LNj+KMkpqV5sscs9NC5kmwxzdOLnPftx9Ts7Kr3H8knpc+pMkgvs2M8rgJX19qg4vo4y743Rxt9fhJ+D0O9FRtO3yTal5VYnXLq1XdXcy+9Q6WK0WyEUFoppA0Oip29ubg0AeI87e4gDZKrtNaREt0REUQREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREH//2Q==';
 
   function fixBrandLogoAndNavbar() {
-    // Comprehensive responsive design & mobile anti-clash system across all devices (320px to 1920px+)
+    // Comprehensive responsive layout (zero overlap on PC, laptop, tablet, and phone) + Original Logo Velvet Plum & Champagne Rose theme
     const style = document.createElement('style');
     style.id = 'rrs-responsive-overhaul';
     style.textContent = `
+      :root {
+        --p: #4A203B;        /* Royal Mulberry Plum harmonized with logo */
+        --pd: #311427;       /* Deep Mulberry hover */
+        --pdeep: #21111B;    /* Exact Velvet Aubergine/Plum from original RRS logo */
+        --accent: #DFC9D4;   /* Soft Dusty Rose-Silver from logo emblem */
+        --accent-l: #F5ECF1; /* Delicate Petal-Blush tint */
+        --surface: #FAF7F9;  /* Warm Pearl-Blush Alabaster background */
+        --gold: #E8C5D4;     /* Champagne Rose-Pearl matching logo needle & RRS lettering */
+        --gold-d: #D7ABC0;   /* Deeper Champagne Rose hover */
+        --red: #5C1D38;
+        --text: #1F111B;
+        --muted: #685260;
+        --line: rgba(74, 32, 59, 0.15);
+        --shadow: 0 10px 30px -5px rgba(33, 17, 27, 0.08);
+        --shadow-h: 0 22px 44px -12px rgba(59, 24, 45, 0.26);
+      }
+
       /* Global overflow & box-sizing safety */
       html, body {
         max-width: 100%;
@@ -56,8 +48,80 @@
         width: 100%;
         max-width: 1280px;
         margin: 0 auto;
-        padding-left: clamp(0.85rem, 3vw, 1.25rem);
-        padding-right: clamp(0.85rem, 3vw, 1.25rem);
+        padding-left: clamp(0.85rem, 2.5vw, 1.25rem);
+        padding-right: clamp(0.85rem, 2.5vw, 1.25rem);
+      }
+
+      /* Theme overrides matching the original RRS Velvet Plum & Rose-Pearl logo */
+      .brand-hi {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #4A203B;
+        background: #F5E6EE;
+        border: 1px solid #DFC2D1;
+        padding: 0.08rem 0.55rem;
+        border-radius: 6px;
+        width: fit-content;
+      }
+      .logo-img {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #21111B;
+        object-fit: cover;
+        border: 2px solid var(--gold);
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(33, 17, 27, 0.22);
+      }
+      .btn-gold {
+        background: var(--gold);
+        color: #21111B;
+        box-shadow: 0 4px 14px rgba(232, 197, 212, 0.32);
+      }
+      .btn-gold:hover {
+        background: var(--gold-d);
+        color: #190B14;
+      }
+      .hero {
+        background:
+          radial-gradient(circle at 85% 15%, rgba(232, 197, 212, 0.18), transparent 46%),
+          linear-gradient(135deg, #180B13 0%, #21111B 48%, #3B1A2F 82%, #4A203B 100%);
+      }
+      .hero::before {
+        background-image: radial-gradient(rgba(232, 197, 212, 0.13) 1px, transparent 1px);
+      }
+      .heritage {
+        background: rgba(232, 197, 212, 0.14);
+        border: 1px solid rgba(232, 197, 212, 0.45);
+        color: #F2E2E9;
+      }
+      .collage figcaption {
+        background: rgba(33, 17, 27, 0.9);
+        color: #F5ECF1;
+        border: 1px solid rgba(232, 197, 212, 0.25);
+      }
+      .badge {
+        background: rgba(33, 17, 27, 0.92);
+        color: var(--gold);
+        border: 1px solid rgba(232, 197, 212, 0.3);
+      }
+      .ptag {
+        background: rgba(232, 197, 212, 0.96);
+        color: #21111B;
+      }
+      .banner, .dispatch {
+        background: linear-gradient(135deg, #1A0C15 0%, #21111B 50%, #4A203B 100%);
+        border-color: rgba(232, 197, 212, 0.38);
+      }
+      .region.intl {
+        background: rgba(232, 197, 212, 0.18);
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      footer .brand-hi {
+        background: rgba(232, 197, 212, 0.16);
+        color: #F2E2E9;
+        border-color: rgba(232, 197, 212, 0.35);
       }
 
       /* Safe responsive grids that never overflow narrow phones */
@@ -74,40 +138,79 @@
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
       }
 
-      /* Brand & Navbar desktop/tablet polish */
-      .logo-img {
-        background: #2E151B;
-        object-fit: cover;
-        flex-shrink: 0;
+      /* CRITICAL: Hide mobile-only menu CTA button on Desktop so it never duplicates or causes navbar overlap */
+      .mobile-menu-cta-item {
+        display: none !important;
       }
-      .brand {
-        min-width: 0;
-        flex: 1 1 auto;
-      }
-      .brand > div {
-        min-width: 0;
-      }
-      .nav-act {
-        flex-shrink: 0;
-      }
-      @media (min-width: 961px) {
-        .links a, .nav-act .btn, .brand-t {
-          white-space: nowrap;
+
+      /* Desktop & Laptop Navbar Anti-Overlap Layout (>= 1041px) */
+      @media (min-width: 1041px) {
+        .nav .wrap {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: clamp(0.75rem, 1.5vw, 1.5rem);
+          flex-wrap: nowrap;
         }
-        .links {
-          gap: clamp(0.75rem, 1.25vw, 1.4rem);
+        .brand {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          flex: 0 0 auto;
+          min-width: max-content;
         }
-      }
-      @media (max-width: 1140px) and (min-width: 961px) {
-        .nav-act .btn-gold {
-          padding: 0.55rem 0.85rem;
-          font-size: 0.8rem;
+        .brand > div {
+          flex: 0 0 auto;
         }
         .brand-t {
-          font-size: 1.02rem;
+          white-space: nowrap;
+          font-size: clamp(1rem, 1.15vw, 1.15rem);
         }
         .brand-s {
-          font-size: 0.66rem;
+          white-space: nowrap;
+          font-size: clamp(0.65rem, 0.72vw, 0.72rem);
+        }
+        .links {
+          display: flex !important;
+          position: static !important;
+          flex-direction: row !important;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(0.65rem, 1.25vw, 1.35rem);
+          flex: 0 1 auto;
+          padding: 0 !important;
+          border: none !important;
+          background: transparent !important;
+          box-shadow: none !important;
+        }
+        .links a {
+          white-space: nowrap;
+          font-size: clamp(0.82rem, 0.9vw, 0.9rem);
+        }
+        .nav-act {
+          display: flex;
+          align-items: center;
+          gap: clamp(0.45rem, 0.75vw, 0.65rem);
+          flex: 0 0 auto;
+        }
+        .nav-act .btn {
+          white-space: nowrap;
+          padding: 0.58rem clamp(0.75rem, 1vw, 1.1rem);
+          font-size: clamp(0.8rem, 0.86vw, 0.88rem);
+        }
+        .burger {
+          display: none !important;
+        }
+      }
+
+      /* Extra breathing room on compact laptops (1041px - 1180px) */
+      @media (max-width: 1180px) and (min-width: 1041px) {
+        .logo-img {
+          width: 48px;
+          height: 48px;
+        }
+        .brand-s {
+          display: none;
         }
       }
 
@@ -157,14 +260,17 @@
       }
       .lb-cap {
         padding: 0.4rem 1rem;
-        background: rgba(10, 6, 28, 0.78);
+        background: rgba(24, 11, 19, 0.82);
         backdrop-filter: blur(4px);
       }
 
-      /* Tablet & Mobile Navigation (<= 960px) */
-      @media (max-width: 960px) {
+      /* Tablet & Mobile Navigation (<= 1040px) */
+      @media (max-width: 1040px) {
         html {
           scroll-padding-top: 76px;
+        }
+        .hero .wrap, .contact {
+          grid-template-columns: 1fr;
         }
         .nav .wrap {
           gap: 0.5rem;
@@ -173,15 +279,26 @@
         }
         .brand {
           gap: 0.6rem;
+          min-width: 0;
+          flex: 1 1 auto;
+        }
+        .brand > div {
+          min-width: 0;
         }
         .brand-t {
-          font-size: clamp(0.9rem, 3.5vw, 1.08rem);
+          font-size: clamp(0.92rem, 3.2vw, 1.1rem);
           line-height: 1.18;
           white-space: normal;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
+        }
+        .nav-act {
+          flex-shrink: 0;
+        }
+        .nav-act .btn-gold {
+          display: none;
         }
         .burger {
           display: inline-grid;
@@ -191,9 +308,20 @@
           flex-shrink: 0;
         }
         .links {
-          box-shadow: 0 18px 36px rgba(46, 21, 27, 0.16);
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #fff;
+          flex-direction: column;
+          box-shadow: 0 18px 36px rgba(33, 17, 27, 0.18);
+          border-bottom: 1px solid var(--line);
           padding: 0.75rem 1.1rem 1.1rem;
           gap: 0;
+        }
+        .links.open {
+          display: flex;
         }
         .links li {
           width: 100%;
@@ -209,15 +337,21 @@
         .links li:last-child a {
           border-bottom: none;
         }
+        .mobile-menu-cta-item {
+          display: block !important;
+          width: 100%;
+        }
         .mobile-menu-cta {
           margin-top: 0.65rem;
           width: 100%;
+        }
+        .metrics {
+          grid-template-columns: repeat(2, 1fr);
         }
       }
 
       /* Mobile Phones & Phablets (<= 768px) */
       @media (max-width: 768px) {
-        /* Clean, unclogged Topbar on Mobile */
         .topbar {
           padding: 0.45rem 0;
           font-size: 0.75rem;
@@ -386,7 +520,7 @@
           padding: 0.7rem 1rem 0.7rem 2.45rem;
           font-size: 0.92rem;
           background: #fff;
-          box-shadow: 0 2px 8px rgba(46,21,27,0.05);
+          box-shadow: 0 2px 8px rgba(33,17,27,0.05);
         }
         .tabs {
           display: flex;
@@ -495,12 +629,12 @@
       /* Compact Mobile Phones (<= 480px) */
       @media (max-width: 480px) {
         .logo-img {
-          width: 40px;
-          height: 40px;
+          width: 44px;
+          height: 44px;
         }
         .brand-hi {
           font-size: 0.62rem;
-          padding: 0.02rem 0.35rem;
+          padding: 0.04rem 0.4rem;
         }
         .brand-t {
           font-size: 0.9rem;
@@ -540,8 +674,8 @@
       /* Extra-Small Phones (<= 360px) */
       @media (max-width: 360px) {
         .logo-img {
-          width: 35px;
-          height: 35px;
+          width: 38px;
+          height: 38px;
         }
         .brand-t {
           font-size: 0.82rem;
@@ -562,18 +696,7 @@
     `;
     document.head.appendChild(style);
 
-    // Move Language Selector into the first row of Topbar on mobile for cleaner layout
-    const topWrap = document.querySelector('.topbar .wrap');
-    const langSel = document.getElementById('lang');
-    if (topWrap && langSel && topWrap.firstElementChild) {
-      topWrap.firstElementChild.style.display = 'flex';
-      topWrap.firstElementChild.style.alignItems = 'center';
-      topWrap.firstElementChild.style.justifyContent = 'space-between';
-      topWrap.firstElementChild.style.flex = '1 1 auto';
-      topWrap.firstElementChild.style.gap = '0.5rem';
-    }
-
-    // Add a full-width "Contact for Pricing" CTA inside the mobile dropdown menu
+    // Add a full-width "Contact for Pricing" CTA inside the mobile dropdown menu (strictly hidden on desktop via .mobile-menu-cta-item)
     const navLinks = document.getElementById('links');
     if (navLinks && !navLinks.querySelector('.mobile-menu-cta-item')) {
       const li = document.createElement('li');
@@ -614,22 +737,15 @@
       }, { passive: true });
     }
 
-    const logoImg = document.querySelector('.logo-img');
-    if (!logoImg) return;
-
-    const applyFallbackLogo = () => {
-      if (logoImg.src !== RRS_LOGO_SVG) {
-        logoImg.src = RRS_LOGO_SVG;
-      }
-    };
-
-    logoImg.addEventListener('error', applyFallbackLogo);
-    if (logoImg.complete && logoImg.naturalWidth === 0) {
-      applyFallbackLogo();
-    }
-    if ((logoImg.getAttribute('src') || '').includes('image_f9eabe.png')) {
-      applyFallbackLogo();
-    }
+    // Always apply the authentic Rajasthan Readymade Stores original profile logo (IMG_4840.JPEG)
+    document.querySelectorAll('.logo-img').forEach(logoImg => {
+      logoImg.src = RRS_LOGO_SVG;
+      logoImg.addEventListener('error', () => {
+        if (logoImg.src !== RRS_LOGO_SVG) {
+          logoImg.src = RRS_LOGO_SVG;
+        }
+      });
+    });
   }
 
   /* ==========================================================================
@@ -644,17 +760,17 @@
         `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
           <defs>
             <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#2E151B"/>
-              <stop offset="60%" stop-color="#722F37"/>
-              <stop offset="100%" stop-color="#4A1C24"/>
+              <stop offset="0%" stop-color="#21111B"/>
+              <stop offset="60%" stop-color="#4A203B"/>
+              <stop offset="100%" stop-color="#311427"/>
             </linearGradient>
           </defs>
           <rect width="800" height="520" fill="url(#g)"/>
-          <rect x="24" y="24" width="752" height="472" rx="18" fill="none" stroke="#D4AF37" stroke-width="2" stroke-opacity="0.55"/>
-          <circle cx="400" cy="195" r="58" fill="rgba(212,175,55,0.15)" stroke="#D4AF37" stroke-width="2"/>
-          <text x="400" y="212" text-anchor="middle" font-family="Georgia, serif" font-size="48" font-weight="700" fill="#D4AF37">RRS</text>
+          <rect x="24" y="24" width="752" height="472" rx="18" fill="none" stroke="#E8C5D4" stroke-width="2" stroke-opacity="0.55"/>
+          <circle cx="400" cy="195" r="58" fill="rgba(212,175,55,0.15)" stroke="#E8C5D4" stroke-width="2"/>
+          <text x="400" y="212" text-anchor="middle" font-family="Georgia, serif" font-size="48" font-weight="700" fill="#E8C5D4">RRS</text>
           <text x="400" y="315" text-anchor="middle" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#FFFFFF">${safeTitle}</text>
-          <text x="400" y="360" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="600" fill="#EAD2D6">${safeSub}</text>
+          <text x="400" y="360" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="600" fill="#DFC9D4">${safeSub}</text>
         </svg>`
       )
     );
